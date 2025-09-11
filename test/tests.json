@@ -1,0 +1,10 @@
+{
+    "haa-eng": {
+        "input": "haa-eng-input.txt",
+        "mode": "haa-eng"
+    },
+    "eng-haa": {
+        "input": "eng-haa-input.txt",
+        "mode": "eng-haa"
+    }
+}

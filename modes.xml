@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modes>
+
+  <!-- haa → eng -->
+
+  <mode name="haa-eng" install="yes" gendebug="yes">
+    <pipeline>
+
+      <program name="lt-proc -w">
+        <file name="haa-eng.automorf.bin"/>
+      </program>
+
+
+      <program name="cg-proc -w">
+        <file name="haa-eng.rlx.bin"/>
+      </program>
+      <program name="apertium-tagger -g $2">
+        <file name="haa-eng.prob"/>
+      </program>
+      <program name="apertium-pretransfer"/>
+      <program name="lt-proc -b">
+        <file name="haa-eng.autobil.bin"/>
+      </program>
+      <program name="lrx-proc -m">
+        <file name="haa-eng.autolex.bin"/>
+      </program>
+
+
+      <program name="rtx-proc">
+        <file name="haa-eng.rtx.bin"/>
+      </program>
+
+      <program name="lt-proc $1">
+        <file name="haa-eng.autogen.bin"/>
+      </program>
+      <program name="lt-proc -p">
+        <file name="haa-eng.autopgen.bin"/>
+      </program>
+    </pipeline>
+  </mode>
+
+  <!-- eng → haa -->
+
+  <mode name="eng-haa" install="yes" gendebug="yes">
+    <pipeline>
+
+      <program name="lt-proc -w">
+        <file name="eng-haa.automorf.bin"/>
+      </program>
+
+
+      <program name="cg-proc -w">
+        <file name="eng-haa.rlx.bin"/>
+      </program>
+      <program name="apertium-tagger -g $2">
+        <file name="eng-haa.prob"/>
+      </program>
+
+      <program name="apertium-pretransfer"/>
+      <program name="lt-proc -b">
+        <file name="eng-haa.autobil.bin"/>
+      </program>
+      <program name="lrx-proc -m">
+        <file name="eng-haa.autolex.bin"/>
+      </program>
+
+
+      <program name="rtx-proc">
+        <file name="eng-haa.rtx.bin"/>
+      </program>
+
+      <program name="lt-proc $1">
+        <file name="eng-haa.autogen.bin"/>
+      </program>
+      <program name="lt-proc -p">
+        <file name="eng-haa.autopgen.bin"/>
+      </program>
+    </pipeline>
+  </mode>
+</modes>
+
