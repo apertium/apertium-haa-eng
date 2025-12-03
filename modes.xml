@@ -41,7 +41,7 @@
 
   <mode name="haa-eng-bilsearch">
   <pipeline>
-    <program name"lt-paradigm --sort">
+    <program name="lt-paradigm --sort">
       <file name="haa-eng.autobil.bin"/>
     </program>
   </pipeline>
