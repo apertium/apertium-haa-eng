@@ -17,6 +17,9 @@
       <program name="apertium-tagger -g $2">
         <file name="haa-eng.prob"/>
       </program>
+      <program name="lsx-proc">
+        <file name="haa-eng.autoseq.bin"/>
+      </program>
       <program name="apertium-pretransfer"/>
       <program name="lt-proc -b">
         <file name="haa-eng.autobil.bin"/>
@@ -29,6 +32,9 @@
       <program name="rtx-proc">
         <file name="haa-eng.rtx.bin"/>
       </program>
+      <program name="lsx-proc" debug-suff="revautoseq">
+        <file name="haa-eng.revautoseq.bin"/>
+      </program>
 
       <program name="lt-proc $1">
         <file name="haa-eng.autogen.bin"/>
@@ -39,28 +45,6 @@
     </pipeline>
   </mode>
 
-  <mode name="haa-eng-bilsearch">
-  <pipeline>
-    <program name="lt-paradigm --sort">
-      <file name="haa-eng.autobil.bin"/>
-    </program>
-  </pipeline>
-</mode>
-
-  <mode name="haa-eng-billookup">
-    <pipeline>
-      <program name="lt-proc -w">
-        <file name="haa-eng.automorf.bin"/>
-      </program>
-      <program name="sed -r 's:\^[^/]+\/:^:g'"/>
-      <program name="sed 's:/:$ ^:g'"/>
-      <program name="apertium-pretransfer"/>
-      <program name="lt-proc -b">
-        <file name="haa-eng.autobil.bin"/>
-      </program>
-    </pipeline>
-  </mode>
-  
   <!-- eng → haa -->
 
   <mode name="eng-haa" install="yes" gendebug="yes">
@@ -78,6 +62,9 @@
         <file name="eng-haa.prob"/>
       </program>
 
+      <program name="lsx-proc">
+        <file name="eng-haa.autoseq.bin"/>
+      </program>
       <program name="apertium-pretransfer"/>
       <program name="lt-proc -b">
         <file name="eng-haa.autobil.bin"/>
@@ -90,6 +77,9 @@
       <program name="rtx-proc">
         <file name="eng-haa.rtx.bin"/>
       </program>
+      <program name="lsx-proc" debug-suff="revautoseq">
+        <file name="eng-haa.revautoseq.bin"/>
+      </program>
 
       <program name="lt-proc $1">
         <file name="eng-haa.autogen.bin"/>
@@ -99,5 +89,61 @@
       </program>
     </pipeline>
   </mode>
+
+
+  <!-- modes for paradigm dictionary -->
+
+  <mode name="haa-eng-bilsearch">
+    <pipeline>
+      <program name="lt-paradigm --sort">
+        <file name="haa-eng.autobil.bin"/>
+      </program>
+    </pipeline>
+  </mode>
+
+  <mode name="haa-eng-billookup">
+    <pipeline>
+      <program name="lt-proc -w">
+        <file name="haa-eng.automorf.bin"/>
+      </program>
+      <program name="sed -r 's:\^[^/]+\/:^:g'"/>
+      <program name="sed 's:/:$ ^:g'"/>
+      <program name="apertium-pretransfer"/>
+      <program name="lt-proc -b">
+        <file name="haa-eng.autobil.bin"/>
+      </program>
+    </pipeline>
+  </mode>
+
+    <mode name="eng-haa-bilsearch">
+    <pipeline>
+      <program name="lt-paradigm --sort">
+        <file name="eng-haa.autobil.bin"/>
+      </program>
+    </pipeline>
+  </mode>
+
+  <mode name="eng-haa-billookup">
+    <pipeline>
+      <program name="lt-proc -w">
+        <file name="eng-haa.automorf.bin"/>
+      </program>
+      <program name="sed -r 's:\^[^/]+\/:^:g'"/>
+      <program name="sed 's:/:$ ^:g'"/>
+      <program name="apertium-pretransfer"/>
+      <program name="lt-proc -b">
+        <file name="eng-haa.autobil.bin"/>
+      </program>
+    </pipeline>
+  </mode>
+
+  <mode name="eng-haa-embeddings">
+    <pipeline>
+      <program name="hfst-proc -W">
+        <file name="eng-haa.embeddings.hfst"/>
+      </program>
+    </pipeline>
+  </mode>
 </modes>
+
 

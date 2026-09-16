@@ -16,6 +16,8 @@ TARGETS_DIR1 =		\
 	$(PREFIX1).autolex.bin	\
 	$(PREFIX1).autogen.bin	\
 	$(PREFIX1).autopgen.bin	\
+	$(PREFIX1).autoseq.bin	\
+	$(PREFIX1).revautoseq.bin	\
 	$(PREFIX1).rtx.bin
 
 TRIMMED_TARGETS_DIR1 = \
@@ -31,6 +33,9 @@ TARGETS_DIR2 =		\
 	$(PREFIX2).autolex.bin	\
 	$(PREFIX2).autogen.bin	\
 	$(PREFIX2).autopgen.bin	\
+	$(PREFIX2).autoseq.bin	\
+	$(PREFIX2).revautoseq.bin	\
+   $(PREFIX2).embeddings.hfst \
 	$(PREFIX2).rtx.bin
 
 TRIMMED_TARGETS_DIR2 = \
@@ -45,6 +50,8 @@ TARGETS_COMMON = $(TARGETS_DIR1) $(TRIMMED_TARGETS_DIR1) \
 SOURCES = \
 	$(BASENAME).$(PREFIX1).rtx	\
 	$(BASENAME).$(PREFIX2).rtx	\
+	$(BASENAME).$(PREFIX1).lsx	\
+	$(BASENAME).$(PREFIX2).lsx	\
 	$(BASENAME).$(PREFIX1).dix			\
 	$(BASENAME).$(PREFIX1).lrx			\
 	$(BASENAME).$(PREFIX2).lrx
@@ -107,6 +114,12 @@ $(PREFIX2).automorf-untrimmed.bin: $(AP_SRC2)/$(LANG2).automorf.bin
 $(PREFIX2).automorf.bin: $(PREFIX2).automorf-untrimmed.bin $(PREFIX2).autobil.bin
 	lt-trim $^ $@
 
+.deps/$(PREFIX2).embeddings-weighted.tsv: ./dev/embeddings/$(PREFIX2).embeddings.tsv
+	cat $< | awk -F'\t' '{ OFS=FS; $$NF=1- $$NF; }1' > $@
+
+$(PREFIX2).embeddings.hfst: .deps/$(PREFIX2).embeddings-weighted.tsv
+	hfst-strings2fst -f optimized-lookup-weighted -Sj $< -o $@
+
 # -------------------
 # English generation:
 # ---------------------
@@ -162,6 +175,17 @@ $(PREFIX2).autolex.bin: $(BASENAME).$(PREFIX2).lrx
 	apertium-validate-lrx $<
 	lrx-comp $< $@
 
+$(PREFIX1).autoseq.bin: $(BASENAME).$(PREFIX1).lsx
+	lsx-comp lr $< $@
+
+$(PREFIX2).autoseq.bin: $(BASENAME).$(PREFIX2).lsx
+	lsx-comp lr $< $@
+
+$(PREFIX1).revautoseq.bin: $(BASENAME).$(PREFIX2).lsx
+	lsx-comp rl $< $@
+
+$(PREFIX2).revautoseq.bin: $(BASENAME).$(PREFIX1).lsx
+	lsx-comp rl $< $@
 
 ###############################################################################
 ## Structural transfer rules
